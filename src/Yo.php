@@ -19,13 +19,13 @@ class Yo
      * $debug
      * @var boolean
      */
-    protected $debug = null;
+    protected $debug = false;
 
     /**
      * __construct  create class instance
      * @param object $client instance of YoClientInterface
      */
-    public function __construct(YoClientInterface $client = null, $debug = null)
+    public function __construct(YoClientInterface $client = null, $debug = false)
     {
         if (! $client) {
             throw new YoException('A client must be provided');
@@ -44,7 +44,15 @@ class Yo
             $this->client->setParams("link", $link);
         }
 
-        return $this->client->post("yoall")->execute();
+        // Setup client
+        $this->client->post("yoall");
+
+        // For testing
+        if (! $this->debug) {
+            return $this->client->execute();
+        } else {
+            return $this->client;
+        }
     }
 
     /**
@@ -65,7 +73,15 @@ class Yo
             $this->client->setParams("link", $link);
         }
 
-        return $this->client->post("yo")->execute();
+        // Setup client
+        $this->client->post("yo");
+
+        // For testing
+        if (! $this->debug) {
+            return $this->client->execute();
+        } else {
+            return $this->client;
+        }
     }
 
     /**
@@ -74,7 +90,15 @@ class Yo
      */
     public function subscribersCount()
     {
-        return $this->client->get("subscribers_count")->execute();
+        // Setup client
+        $this->client->get("subscribers_count");
+
+        // For testing
+        if (! $this->debug) {
+            return $this->client->execute();
+        } else {
+            return $this->client;
+        }
     }
 
     /**

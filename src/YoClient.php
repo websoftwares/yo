@@ -114,7 +114,6 @@ class YoClient implements YoClientInterface
         $this->setCurlOption(CURLOPT_POST, 1)
              ->setCurlOption(CURLOPT_POSTFIELDS, $this->params)
              ->setCurlOption(CURLOPT_URL, self::ENDPOINT
-                . "/"
                 . $method
                 . "/");
 
@@ -129,7 +128,6 @@ class YoClient implements YoClientInterface
     public function get($method)
     {
         $this->setCurlOption(CURLOPT_URL,self::ENDPOINT
-            . "/"
             . $method
             . "/?"
             . $this->buildQueryString($this->params));
@@ -146,6 +144,8 @@ class YoClient implements YoClientInterface
     {
         // Get curl options
         $curlOptions = $this->getCurlOptions();
+
+        var_dump($curlOptions);
 
         // Init curl
         $curl = curl_init();
