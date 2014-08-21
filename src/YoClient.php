@@ -145,8 +145,6 @@ class YoClient implements YoClientInterface
         // Get curl options
         $curlOptions = $this->getCurlOptions();
 
-        var_dump($curlOptions);
-
         // Init curl
         $curl = curl_init();
 

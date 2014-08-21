@@ -10,7 +10,6 @@ namespace Websoftwares;
 */
 interface YoClientInterface
 {
-
     /**
      * setParams
      *

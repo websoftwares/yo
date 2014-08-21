@@ -6,7 +6,10 @@ use Websoftwares\Yo, Websoftwares\YoClient;
  */
 class YoTest extends \PHPUnit_Framework_TestCase
 {
-    CONST TEST_KEY  = '550u8400-n29i-41t4-aTEST-446655440000';
+    /**
+     * Yo Api key (UUID?)
+     */
+    const TEST_KEY  = '550u8400-n29i-41t4-aTEST-446655440000';
 
     /**
      * $debug
@@ -185,6 +188,40 @@ class YoTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInternalType("array",  $curlOptions);
         $this->assertEquals($expectedCurlOptions, $curlOptions);
+    }
+
+    public function testSubscribersCountSuccessResponseStub()
+    {
+
+        $actual = new \stdClass;
+        $actual->result = 1;
+
+        $stub = $this->getMockBuilder('\Websoftwares\\Yo')
+             ->setConstructorArgs([new \Websoftwares\YoClient(self::TEST_KEY)])
+             ->getMock();
+
+        $stub->method('subscribersCount')
+             ->willReturn($actual);
+
+        $this->assertEquals($actual, $stub->subscribersCount());
+
+    }
+
+    public function testSubscribersCountZeroResponseStub()
+    {
+
+        $actual = new \stdClass;
+        $actual->result = 0;
+
+        $stub = $this->getMockBuilder('\Websoftwares\\Yo')
+             ->setConstructorArgs([new \Websoftwares\YoClient(self::TEST_KEY)])
+             ->getMock();
+
+        $stub->method('subscribersCount')
+             ->willReturn($actual);
+
+        $this->assertEquals($actual, $stub->subscribersCount());
+
     }
 
     /**
