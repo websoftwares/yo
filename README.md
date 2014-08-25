@@ -1,7 +1,7 @@
 #Yo (v0.1.0)
 This package lets u perform actions on the [Yo Developers API](http://dev.justyo.co/ "Yo Developers API").
 
-[![Build Status](https://api.travis-ci.org/websoftwares/yo.png)](https://travis-ci.org/websoftwares/wk2014)
+[![Build Status](https://api.travis-ci.org/websoftwares/yo.png)](https://travis-ci.org/websoftwares/yo)
 [![Coverage Status](https://img.shields.io/coveralls/websoftwares/yo.svg)](https://coveralls.io/r/websoftwares/yo?branch=master)
 
 It has no extra dependencies but it can play nice with other curl or http clients by creating an adapter
