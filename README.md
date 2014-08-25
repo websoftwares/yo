@@ -80,5 +80,11 @@ $yo->subscribersCount();
 ## Testing
 In the tests folder u can find several tests.
 
+## Goals
+
+* Unit testing 100%
+* PSR compliance
+* Implement new methods from Yo API when they are available
+
 ## License
 The [MIT](http://opensource.org/licenses/MIT "MIT") License (MIT).
