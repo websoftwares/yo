@@ -1,4 +1,4 @@
-#Yo (v0.1.0)
+#Yo (v0.1.2)
 This package lets u perform actions on the [Yo Developers API](http://dev.justyo.co/ "Yo Developers API").
 
 [![Build Status](https://api.travis-ci.org/websoftwares/yo.png)](https://travis-ci.org/websoftwares/yo)
