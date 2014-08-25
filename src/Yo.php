@@ -1,7 +1,7 @@
 <?php
 namespace Websoftwares;
 /**
-* Yo class with all API methods.
+* Yo wrapper class with all API methods.
 *
 * @package Websoftwares
 * @license http://opensource.org/licenses/MIT
@@ -14,13 +14,11 @@ class Yo
      * @var YoClientInterface
      */
     protected $client = null;
-
     /**
      * $debug
      * @var boolean
      */
     protected $debug = false;
-
     /**
      * __construct  create class instance
      * @param object $client instance of YoClientInterface

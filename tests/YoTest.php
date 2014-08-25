@@ -36,7 +36,7 @@ class YoTest extends \PHPUnit_Framework_TestCase
 
     public function testClientPropertySucceeds()
     {
-        $client = new \stdClass;
+        $client = new \stdClass();
         $this->setProperty('client', $client);
         $this->assertEquals($client, $this->getProperty($this->Yo,'client'));
     }
@@ -190,27 +190,10 @@ class YoTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedCurlOptions, $curlOptions);
     }
 
-    public function testSubscribersCountSuccessResponseStub()
-    {
-
-        $actual = new \stdClass;
-        $actual->result = 1;
-
-        $stub = $this->getMockBuilder('\Websoftwares\\Yo')
-             ->setConstructorArgs([new \Websoftwares\YoClient(self::TEST_KEY)])
-             ->getMock();
-
-        $stub->method('subscribersCount')
-             ->willReturn($actual);
-
-        $this->assertEquals($actual, $stub->subscribersCount());
-
-    }
-
     public function testSubscribersCountZeroResponseStub()
     {
 
-        $actual = new \stdClass;
+        $actual = new \stdClass();
         $actual->result = 0;
 
         $stub = $this->getMockBuilder('\Websoftwares\\Yo')
@@ -221,7 +204,6 @@ class YoTest extends \PHPUnit_Framework_TestCase
              ->willReturn($actual);
 
         $this->assertEquals($actual, $stub->subscribersCount());
-
     }
 
     /**
@@ -229,7 +211,7 @@ class YoTest extends \PHPUnit_Framework_TestCase
      */
     public function testInstantiateAsObjectFails()
     {
-        new Yo;
+        new Yo();
     }
 
     public function getMethod($method)

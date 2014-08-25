@@ -14,7 +14,6 @@ class YoClient implements YoClientInterface
      * Yo API endpoint
      */
     const ENDPOINT = "http://api.justyo.co/";
-
     /**
      * @var array
      */
@@ -26,7 +25,6 @@ class YoClient implements YoClientInterface
         CURLOPT_URL => '',
         CURLOPT_USERAGENT => 'Websoftwares Yo PHP client'
     ];
-
     /**
      * @var array
      */
@@ -144,18 +142,14 @@ class YoClient implements YoClientInterface
     {
         // Get curl options
         $curlOptions = $this->getCurlOptions();
-
         // Init curl
         $curl = curl_init();
-
         // Set options
         curl_setopt_array($curl, $curlOptions);
-
         // Execute and assing response to $response
         if (!$response = curl_exec($curl)) {
             throw new YoException(curl_error($curl), curl_errno($curl));
         }
-
         // Close request to clear up some resources
         curl_close($curl);
 
