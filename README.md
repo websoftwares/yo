@@ -1,9 +1,10 @@
-#Yo (v0.1.3)
+#Yo (v0.1.4)
 This package lets u perform actions on the [Yo Developers API](http://dev.justyo.co/ "Yo Developers API").
 
 [![Build Status](https://api.travis-ci.org/websoftwares/yo.png)](https://travis-ci.org/websoftwares/yo)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/websoftwares/yo/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/websoftwares/yo/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/websoftwares/yo/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/websoftwares/yo/?branch=master)
+[![Dependencies Status](https://depending.in/websoftwares/yo.png)](http://depending.in/websoftwares/yo)
 
 It has no extra dependencies but it can play nice with other curl or http clients by creating an adapter
 just implement the _YoClientInterface_ and inject it into the `Yo` class.
