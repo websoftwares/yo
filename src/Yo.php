@@ -14,22 +14,17 @@ class Yo
      * @var YoClientInterface
      */
     protected $client = null;
-    /**
-     * $debug
-     * @var boolean
-     */
-    protected $debug = false;
+
     /**
      * __construct  create class instance
      * @param object $client instance of YoClientInterface
      */
-    public function __construct(YoClientInterface $client = null, $debug = false)
+    public function __construct(YoClientInterface $client = null)
     {
         if (! $client) {
             throw new YoException('A client must be provided');
         }
         $this->client = $client;
-        $this->debug = $debug;
     }
 
     /**
@@ -42,15 +37,7 @@ class Yo
             $this->client->setParams("link", $link);
         }
 
-        // Setup client
-        $this->client->post("yoall");
-
-        // For testing
-        if (! $this->debug) {
-            return $this->client->execute();
-        } else {
-            return $this->client;
-        }
+        return $this->client->post("yoall")->execute();
     }
 
     /**
@@ -71,15 +58,7 @@ class Yo
             $this->client->setParams("link", $link);
         }
 
-        // Setup client
-        $this->client->post("yo");
-
-        // For testing
-        if (! $this->debug) {
-            return $this->client->execute();
-        } else {
-            return $this->client;
-        }
+        return $this->client->post("yo")->execute();
     }
 
     /**
@@ -88,29 +67,6 @@ class Yo
      */
     public function subscribersCount()
     {
-        // Setup client
-        $this->client->get("subscribers_count");
-
-        // For testing
-        if (! $this->debug) {
-            return $this->client->execute();
-        } else {
-            return $this->client;
-        }
-    }
-
-    /**
-     * __call  overloading client methods
-     * @param  string $method
-     * @param  mixed  $args
-     * @return mixed
-     */
-    public function __call($method, $args)
-    {
-        if (! method_exists($this,$method)) {
-            call_user_func_array(array($this->client, $method), $args);
-
-            return $this;
-        }
+        return $this->client->get("subscribers_count")->execute();
     }
 }

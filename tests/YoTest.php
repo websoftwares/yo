@@ -11,22 +11,9 @@ class YoTest extends \PHPUnit_Framework_TestCase
      */
     const TEST_KEY  = '550u8400-n29i-41t4-aTEST-446655440000';
 
-    /**
-     * $debug
-     * @var boolean
-     */
-    private $debug = true;
-
-    /**
-     * $reflection
-     * @var object
-     */
-    protected $reflection;
-
     public function setUp()
     {
-        $this->Yo = new Yo(new YoClient(self::TEST_KEY), $this->debug);
-        $this->reflection = new \ReflectionClass($this->Yo);
+        $this->Yo = new Yo(new YoClient(self::TEST_KEY));
     }
 
     public function testInstantiateAsObjectSucceeds()
@@ -34,176 +21,67 @@ class YoTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Websoftwares\Yo', $this->Yo);
     }
 
-    public function testClientPropertySucceeds()
+    public function testAllSucceeds()
     {
-        $client = new \stdClass();
-        $this->setProperty('client', $client);
-        $this->assertEquals($client, $this->getProperty($this->Yo,'client'));
+        $response = [];
+
+        $YoClient = $this->getMock("Websoftwares\YoClient", ["execute"], [self::TEST_KEY]);
+
+        $YoClient->expects($this->any())
+            ->method('execute')
+            ->will($this->returnCallback(function () use (&$response) {
+                $response[] = '{}';
+            }));
+
+        $YoAll = (new Yo($YoClient))->all();
+        $YoAllLink = (new Yo($YoClient))->all("http://yo.websoftwar.es");
+
+        $expected = new \stdClass();
+
+        $this->assertEquals($expected, json_decode($response[0]));
+        $this->assertEquals($expected, json_decode($response[1]));
     }
 
     public function testUserSucceeds()
     {
-        $client = $this->Yo->user("BORIS010");
+        $response = [];
 
-        $expectedParams = [
-            "api_token" => self::TEST_KEY,
-            "username" => "BORIS010"
-        ];
+        $YoClient = $this->getMock("Websoftwares\YoClient", ["execute"], [self::TEST_KEY]);
 
-        $expectedCurlOptions = [
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_FAILONERROR => 1,
-            CURLOPT_POST => 1,
-            CURLOPT_POSTFIELDS => $expectedParams,
-            CURLOPT_TIMEOUT => 10,
-            CURLOPT_URL => "http://api.justyo.co/yo/",
-            CURLOPT_USERAGENT => 'Websoftwares Yo PHP client'
-        ];
+        $YoClient->expects($this->any())
+            ->method('execute')
+            ->will($this->returnCallback(function () use (&$response) {
+                $response[] = '{"result": "OK"}';
+            }));
 
-        $params = $this->getProperty($client,'params');
+        $YoUser = (new Yo($YoClient))->user("BORIS010");
+        $YoUserLink = (new Yo($YoClient))->user("BORIS010", "http://yo.websoftwar.es");
 
-        $this->assertInternalType("array",  $params);
-        $this->assertEquals($expectedParams, $params);
+        $expected = new \stdClass();
+        $expected->result = "OK";
 
-        $curlOptions = $this->getProperty($client,'curlOptions');
-
-        $this->assertInternalType("array",  $curlOptions);
-        $this->assertEquals($expectedCurlOptions, $curlOptions);
-    }
-
-    public function testUserLinkSucceeds()
-    {
-        $client = $this->Yo->user("BORIS010", "http://yo.websoftwar.es");
-
-        $expectedParams = [
-            "api_token" => self::TEST_KEY,
-            "username" => "BORIS010",
-            "link" => "http://yo.websoftwar.es"
-        ];
-
-        $expectedCurlOptions = [
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_FAILONERROR => 1,
-            CURLOPT_POST => 1,
-            CURLOPT_POSTFIELDS => $expectedParams,
-            CURLOPT_TIMEOUT => 10,
-            CURLOPT_URL => "http://api.justyo.co/yo/",
-            CURLOPT_USERAGENT => 'Websoftwares Yo PHP client'
-        ];
-
-        $params = $this->getProperty($client,'params');
-
-        $this->assertInternalType("array",  $params);
-        $this->assertEquals($expectedParams, $params);
-
-        $curlOptions = $this->getProperty($client,'curlOptions');
-
-        $this->assertInternalType("array",  $curlOptions);
-        $this->assertEquals($expectedCurlOptions, $curlOptions);
-    }
-
-    public function testAllSucceeds()
-    {
-        $client = $this->Yo->all();
-
-        $expectedParams = [
-            "api_token" => self::TEST_KEY
-        ];
-
-        $expectedCurlOptions = [
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_FAILONERROR => 1,
-            CURLOPT_POST => 1,
-            CURLOPT_POSTFIELDS => $expectedParams,
-            CURLOPT_TIMEOUT => 10,
-            CURLOPT_URL => "http://api.justyo.co/yoall/",
-            CURLOPT_USERAGENT => 'Websoftwares Yo PHP client'
-        ];
-
-        $params = $this->getProperty($client,'params');
-
-        $this->assertInternalType("array",  $params);
-        $this->assertEquals($expectedParams, $params);
-
-        $curlOptions = $this->getProperty($client,'curlOptions');
-
-        $this->assertInternalType("array",  $curlOptions);
-        $this->assertEquals($expectedCurlOptions, $curlOptions);
-    }
-
-    public function testAllLinkSucceeds()
-    {
-        $client = $this->Yo->all("http://yo.websoftwar.es");
-
-        $expectedParams = [
-            "api_token" => self::TEST_KEY,
-            "link" => "http://yo.websoftwar.es"
-        ];
-
-        $expectedCurlOptions = [
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_FAILONERROR => 1,
-            CURLOPT_POST => 1,
-            CURLOPT_POSTFIELDS => $expectedParams,
-            CURLOPT_TIMEOUT => 10,
-            CURLOPT_URL => "http://api.justyo.co/yoall/",
-            CURLOPT_USERAGENT => 'Websoftwares Yo PHP client'
-        ];
-
-        $params = $this->getProperty($client,'params');
-
-        $this->assertInternalType("array",  $params);
-        $this->assertEquals($expectedParams, $params);
-
-        $curlOptions = $this->getProperty($client,'curlOptions');
-
-        $this->assertInternalType("array",  $curlOptions);
-        $this->assertEquals($expectedCurlOptions, $curlOptions);
+        $this->assertEquals($expected, json_decode($response[0]));
+        $this->assertEquals($expected, json_decode($response[1]));
     }
 
     public function testSubscribersCountSucceeds()
     {
+        $response = [];
 
-        $client = $this->Yo->subscribersCount();
+        $YoClient = $this->getMock("Websoftwares\YoClient", ["execute"], [self::TEST_KEY]);
 
-        $expectedParams = [
-            "api_token" => self::TEST_KEY,
-        ];
+        $YoClient->expects($this->any())
+            ->method('execute')
+            ->will($this->returnCallback(function () use (&$response) {
+                $response[] = '{"result": 1}';
+            }));
 
-        $expectedCurlOptions = [
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_FAILONERROR => 1,
-            CURLOPT_POST => 0,
-            CURLOPT_TIMEOUT => 10,
-            CURLOPT_URL => "http://api.justyo.co/subscribers_count/?api_token=550u8400-n29i-41t4-aTEST-446655440000",
-            CURLOPT_USERAGENT => 'Websoftwares Yo PHP client'
-        ];
+        $subscribersCount = (new Yo($YoClient))->subscribersCount();
 
-        $params = $this->getProperty($client,'params');
+        $expected = new \stdClass();
+        $expected->result = 1;
 
-        $this->assertInternalType("array",  $params);
-        $this->assertEquals($expectedParams, $params);
-
-        $curlOptions = $this->getProperty($client,'curlOptions');
-
-        $this->assertInternalType("array",  $curlOptions);
-        $this->assertEquals($expectedCurlOptions, $curlOptions);
-    }
-
-    public function testSubscribersCountZeroResponseStub()
-    {
-
-        $actual = new \stdClass();
-        $actual->result = 0;
-
-        $stub = $this->getMockBuilder('\Websoftwares\\Yo')
-             ->setConstructorArgs([new \Websoftwares\YoClient(self::TEST_KEY)])
-             ->getMock();
-
-        $stub->method('subscribersCount')
-             ->willReturn($actual);
-
-        $this->assertEquals($actual, $stub->subscribersCount());
+        $this->assertEquals($expected, json_decode($response[0]));
     }
 
     /**
@@ -214,12 +92,12 @@ class YoTest extends \PHPUnit_Framework_TestCase
         new Yo();
     }
 
-    public function getMethod($method)
+    /**
+     * @expectedException Websoftwares\YoException
+     */
+    public function testUserFails()
     {
-        $method = $this->reflection->getMethod($method);
-        $method->setAccessible(true);
-
-        return $method;
+        $this->Yo->user();
     }
 
     public function getProperty($object, $property)

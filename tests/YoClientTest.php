@@ -92,16 +92,21 @@ class YoClientTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedParams, $params);
     }
 
-    public function testSetParamsSucceeds()
+    public function testGetParamsSucceeds()
     {
-        $expectedParams = [
+
+        $this->YoClient->setParams("xxx", self::TEST_KEY);
+
+        $expected = [
+            "xxx" => self::TEST_KEY,
             "api_token" => self::TEST_KEY
         ];
 
-        $params = $this->getProperty('params');
+        $method = $this->getMethod('getParams');
+        $actual = $method->invoke($this->YoClient);
 
-        $this->assertInternalType("array",  $params);
-        $this->assertEquals($expectedParams, $params);
+        $this->assertEquals($expected, $actual);
+
     }
 
     public function testPostSucceeds()
