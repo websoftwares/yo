@@ -1,4 +1,4 @@
-#Yo (v0.2.0)
+#Yo (v0.2.1)
 This package lets u perform actions on the [Yo Developers API](http://dev.justyo.co/ "Yo Developers API").
 
 [![Build Status](https://api.travis-ci.org/websoftwares/yo.png)](https://travis-ci.org/websoftwares/yo)
@@ -23,7 +23,7 @@ Create a composer.json file in your project root:
 ```php
 {
     "require": {
-        "websoftwares/yo": "dev-master"
+        "websoftwares/yo": "~0.2"
     }
 }
 ```
