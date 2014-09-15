@@ -156,14 +156,12 @@ class YoClient implements YoClientInterface
         // Decode json response
         $response = json_decode($response);
 
-        // Valid response
-        if ($response->result === 0 || $response->result) {
-            return $response;
         //Invalid responses
-        } elseif ($response->code && $response->error) {
+        if (isset($response->code)) {
             throw new YoException($response->code,$response->error);
+        // Valid response
         } else {
-            throw new YoException("Error processing request");
+            return $response;
         }
     }
 }
